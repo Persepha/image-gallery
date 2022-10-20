@@ -1,0 +1,40 @@
+version: "3.9"
+services:
+  web:
+    depends_on:
+      - postgres_db
+    build:
+      context: ./web
+      dockerfile: Dockerfile.prod
+    image: image-gallery-prod:v1
+    env_file:
+      - web/.env
+    volumes:
+      - static_volume:/app/staticfiles
+    expose:
+      - 8000
+    command: sh -c "chmod +x /app/migrate.sh && sh /app/migrate.sh && /app/entrypoint.sh"
+  postgres_db:
+    image: postgres
+    command: -p 5434
+    env_file:
+      - web/.env
+    expose:
+      - 5434
+    ports:
+      - "5434:5434"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/app/staticfiles
+    ports:
+      - "1337:80"
+    depends_on:
+      - web
+
+
+volumes:
+  postgres_data:
+  static_volume:
