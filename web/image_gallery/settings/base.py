@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django_filters',
 
     'common',
+    'gallery',
 ]
 
 MIDDLEWARE = [
