@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 
 from common.models import TimeStampedModel
+from common.services import generate_slug
 
 
 class Image(TimeStampedModel):
@@ -22,3 +23,8 @@ class Image(TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = generate_slug(str(self.name))
+        super().save(*args, **kwargs)
