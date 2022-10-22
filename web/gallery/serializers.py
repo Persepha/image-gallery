@@ -18,9 +18,15 @@ class ImageOutputSerializer(serializers.Serializer):
     tags = TagOutputSerializer(many=True, read_only=True)
 
 
+class ImageOutputFilterSerializer(serializers.Serializer):
+    id = serializers.IntegerField(required=False)
+    name = serializers.CharField(required=False)
+
+
 class ImageInputSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=200)
     slug = serializers.SlugField(required=False)
+    tags = serializers.CharField(required=False)
 
     def validate_slug(self, value):
         if value == 'create':
