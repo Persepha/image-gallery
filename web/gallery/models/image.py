@@ -3,6 +3,7 @@ from django.db import models
 
 from common.models import TimeStampedModel
 from common.services import generate_slug
+from .tag import Tag
 
 
 class Image(TimeStampedModel):
@@ -19,6 +20,10 @@ class Image(TimeStampedModel):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='my_images',
+    )
+    tags = models.ManyToManyField(
+        Tag,
+        blank=True,
     )
 
     def __str__(self):
