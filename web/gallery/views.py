@@ -6,9 +6,11 @@ from rest_framework.views import APIView
 
 from common.pagination import LimitOffsetPagination, get_paginated_response
 from gallery.models.image import Image
+from gallery.permissions import IsOwner
 from gallery.selectors import image_list_with_tags
-from gallery.serializers import ImageInputSerializer, ImageOutputSerializer, ImageOutputFilterSerializer
-from gallery.services import image_create, image_delete
+from gallery.serializers import ImageInputSerializer, ImageOutputSerializer, ImageOutputFilterSerializer, \
+    ImageUpdateInputSerializer
+from gallery.services import image_create, image_delete, image_update
 
 
 class ImageListApi(APIView):
@@ -63,3 +65,19 @@ class ImageDeleteApi(APIView):
         image_delete(image=image)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class ImageUpdateApi(APIView):
+    permission_classes = (IsAuthenticated, IsOwner)
+
+    def post(self, request, slug):
+        serializer = ImageUpdateInputSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        image = get_object_or_404(Image, slug=slug)
+
+        self.check_object_permissions(request, image)
+
+        updated_image = image_update(image=image, data=serializer.validated_data)
+
+        return Response(status=status.HTTP_200_OK)

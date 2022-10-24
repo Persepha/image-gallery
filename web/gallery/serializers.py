@@ -36,3 +36,7 @@ class ImageInputSerializer(serializers.Serializer):
             raise serializers.ValidationError('Slug already exists')
 
         return value
+
+
+class ImageUpdateInputSerializer(ImageInputSerializer):
+    name = serializers.CharField(max_length=200, required=False)

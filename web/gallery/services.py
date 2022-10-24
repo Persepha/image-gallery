@@ -1,7 +1,9 @@
 from typing import Iterable
 
 from django.conf import settings
+from django.db import transaction
 
+from common.services import model_update
 from .models.image import Image
 from .models.tag import Tag
 
@@ -39,3 +41,24 @@ def image_create(
 
 def image_delete(*, image: Image):
     image.delete()
+
+
+@transaction.atomic
+def image_update(
+    *,
+    image: Image,
+    data,
+) -> Image:
+    non_side_effect_fields = ['name', 'slug']
+
+    image, has_updated = model_update(
+        instance=image,
+        fields=non_side_effect_fields,
+        data=data,
+    )
+
+    if 'tags' in data:
+        tag_list: Iterable[Tag] = tags_create(tags=data['tags'])
+        image.tags.set(tag_list)
+
+    return image
