@@ -35,3 +35,7 @@ def image_create(
         image.tags.add(*tag_list)
 
     return image
+
+
+def image_delete(*, image: Image):
+    image.delete()

@@ -8,7 +8,7 @@ from common.pagination import LimitOffsetPagination, get_paginated_response
 from gallery.models.image import Image
 from gallery.selectors import image_list_with_tags
 from gallery.serializers import ImageInputSerializer, ImageOutputSerializer, ImageOutputFilterSerializer
-from gallery.services import image_create
+from gallery.services import image_create, image_delete
 
 
 class ImageListApi(APIView):
@@ -55,3 +55,11 @@ class ImageDetailApi(APIView):
         serializer = ImageOutputSerializer(image)
 
         return Response(serializer.data)
+
+
+class ImageDeleteApi(APIView):
+    def delete(self, request, slug):
+        image = get_object_or_404(Image, slug=slug)
+        image_delete(image=image)
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
