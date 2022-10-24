@@ -21,6 +21,7 @@ class ImageOutputSerializer(serializers.Serializer):
 class ImageOutputFilterSerializer(serializers.Serializer):
     id = serializers.IntegerField(required=False)
     name = serializers.CharField(required=False)
+    tags = serializers.CharField(required=False)
 
 
 class ImageInputSerializer(serializers.Serializer):
