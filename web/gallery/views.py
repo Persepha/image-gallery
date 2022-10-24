@@ -1,9 +1,11 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from common.pagination import LimitOffsetPagination, get_paginated_response
+from gallery.models.image import Image
 from gallery.selectors import image_list_with_tags
 from gallery.serializers import ImageInputSerializer, ImageOutputSerializer, ImageOutputFilterSerializer
 from gallery.services import image_create
@@ -45,3 +47,11 @@ class ImageCreateApi(APIView):
                                      owner=user, tags=tags)
 
         return Response(status=status.HTTP_201_CREATED)
+
+
+class ImageDetailApi(APIView):
+    def get(self, request, slug):
+        image = get_object_or_404(Image, slug=slug)
+        serializer = ImageOutputSerializer(image)
+
+        return Response(serializer.data)
