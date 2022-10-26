@@ -30,7 +30,7 @@ if DB_IS_AVAILABLE:
     }
 
 
-REST_FRAMEWORK = {
+REST_FRAMEWORK_PROD_SETTINGS = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
     ),
@@ -38,3 +38,5 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.JSONParser',
     )
 }
+
+REST_FRAMEWORK.update(REST_FRAMEWORK_PROD_SETTINGS)
