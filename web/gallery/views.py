@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -60,15 +60,20 @@ class ImageDetailApi(APIView):
 
 
 class ImageDeleteApi(APIView):
+    permission_classes = (IsOwner | IsAdminUser, )
+
     def delete(self, request, slug):
         image = get_object_or_404(Image, slug=slug)
+
+        self.check_object_permissions(request, image)
+
         image_delete(image=image)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class ImageUpdateApi(APIView):
-    permission_classes = (IsAuthenticated, IsOwner)
+    permission_classes = (IsOwner | IsAdminUser, )
 
     def post(self, request, slug):
         serializer = ImageUpdateInputSerializer(data=request.data)
