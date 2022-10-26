@@ -1,6 +1,7 @@
 -r base.txt
 
 django-debug-toolbar==3.7.0
+coverage==6.5.0
 
 flake8
 flake8-builtins
