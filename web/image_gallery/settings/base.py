@@ -45,7 +45,8 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-    ]
+    ],
+    'EXCEPTION_HANDLER': 'common.exception_handlers.drf_exception_handler',
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
