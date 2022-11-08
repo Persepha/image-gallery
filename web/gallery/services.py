@@ -24,11 +24,12 @@ def tags_create(*, tags: str) -> Iterable[Tag]:
 def image_create(
     *,
     name: str,
+    url: str,
     slug: str = '',
     owner: settings.AUTH_USER_MODEL,
     tags: str = None,
 ) -> Image:
-    image = Image(name=name, slug=slug, owner=owner)
+    image = Image(name=name, url=url, slug=slug, owner=owner)
     image.full_clean()
     image.save()
 
@@ -49,7 +50,7 @@ def image_update(
     image: Image,
     data,
 ) -> Image:
-    non_side_effect_fields = ['name', 'slug']
+    non_side_effect_fields = ['name', 'slug', 'url']
 
     image, has_updated = model_update(
         instance=image,

@@ -16,6 +16,7 @@ class Image(TimeStampedModel):
         blank=True,
         help_text='Optional field. If the field is empty, it will be generated automatically based on the image name',
     )
+    url = models.URLField()
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,

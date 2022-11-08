@@ -11,6 +11,7 @@ class TagOutputSerializer(serializers.Serializer):
 class ImageOutputSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     name = serializers.CharField()
+    url = serializers.URLField()
     slug = serializers.SlugField()
     owner_username = serializers.CharField(source='owner.username',
                                            read_only=True)
@@ -26,6 +27,7 @@ class ImageOutputFilterSerializer(serializers.Serializer):
 
 class ImageInputSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=200)
+    url = serializers.URLField()
     slug = serializers.SlugField(required=False)
     tags = serializers.CharField(required=False)
 
@@ -41,3 +43,4 @@ class ImageInputSerializer(serializers.Serializer):
 
 class ImageUpdateInputSerializer(ImageInputSerializer):
     name = serializers.CharField(max_length=200, required=False)
+    url = serializers.URLField(required=False)
