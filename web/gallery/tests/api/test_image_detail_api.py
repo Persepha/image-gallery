@@ -9,7 +9,12 @@ from gallery.models.image import Image
 class ImageDetailApiTests(APITestCase):
     def setUp(self) -> None:
         self.user = User.objects.create(username='Test user')
-        self.image1 = Image.objects.create(name='test', slug='test', owner=self.user)
+        self.image1 = Image.objects.create(
+            name='test',
+            url='https://source.unsplash.com/random/300',
+            slug='test',
+            owner=self.user
+        )
 
     def test_get_image_detail(self):
         url = reverse('image-detail', args=(self.image1.slug, ))
@@ -18,6 +23,7 @@ class ImageDetailApiTests(APITestCase):
         expected_data = {
             'id': self.image1.id,
             'name': self.image1.name,
+            'url': self.image1.url,
             'slug': self.image1.slug,
             'owner_username': self.image1.owner.username,
             'tags': [],

@@ -10,6 +10,7 @@ class ImageUpdateTests(TestCase):
         self.user = User.objects.create(username='Test user')
         self.image1 = Image.objects.create(
             name='test',
+            url='https://source.unsplash.com/random/300',
             slug='test',
             owner=self.user,
         )
@@ -20,6 +21,7 @@ class ImageUpdateTests(TestCase):
         data = {
             "name": "new_name",
             "slug": "new_slug",
+            "url": "https://source.unsplash.com/random/500",
         }
 
         updated_image = image_update(
@@ -31,6 +33,7 @@ class ImageUpdateTests(TestCase):
         self.assertEqual(updated_image, Image.objects.first())
         self.assertEqual("new_slug", self.image1.slug)
         self.assertEqual("new_name", self.image1.name)
+        self.assertEqual("https://source.unsplash.com/random/500", self.image1.url)
 
     def test_updating_image_with_tags(self):
         self.assertEqual(1, Image.objects.count())

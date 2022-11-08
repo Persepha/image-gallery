@@ -11,7 +11,12 @@ class ImageDeleteApiTests(APITestCase):
     def setUp(self) -> None:
         self.user = User.objects.create(username='Test user')
         self.token = Token.objects.create(user=self.user)
-        self.image1 = Image.objects.create(name='test', slug='test', owner=self.user)
+        self.image1 = Image.objects.create(
+            name='test',
+            url='https://source.unsplash.com/random/300',
+            slug='test',
+            owner=self.user
+        )
 
     def test_delete_image_not_owner(self):
         self.assertEqual(1, Image.objects.count())

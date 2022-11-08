@@ -13,6 +13,7 @@ class ImageCreateTests(TestCase):
         self.assertEqual(0, Image.objects.count())
         created_image = image_create(
             name='test',
+            url='https://source.unsplash.com/random/300',
             slug='test',
             owner=self.user,
         )
@@ -23,6 +24,7 @@ class ImageCreateTests(TestCase):
         self.assertEqual(0, Image.objects.count())
         created_image = image_create(
             name='test',
+            url='https://source.unsplash.com/random/300',
             slug='test',
             owner=self.user,
             tags='testtag1, testtag2,',

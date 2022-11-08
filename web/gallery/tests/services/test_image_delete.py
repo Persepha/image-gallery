@@ -10,6 +10,7 @@ class ImageDeleteTests(TestCase):
         self.user = User.objects.create(username='Test user')
         Image.objects.create(
             name='test',
+            url='https://source.unsplash.com/random/300',
             slug='test',
             owner=self.user,
         )
