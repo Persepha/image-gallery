@@ -5,6 +5,10 @@ __pycache__/
 *$py.class
 
 .idea
+idea/
+
+staticfiles/
+web/staticfiles/
 
 # C extensions
 *.so
