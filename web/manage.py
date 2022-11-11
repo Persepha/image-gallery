@@ -6,7 +6,11 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'image_gallery.settings.local')
+    IS_RAILWAY = bool(int(os.environ.get('IS_RAILWAY')))
+    if IS_RAILWAY:
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'image_gallery.settings.production')
+    else:
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'image_gallery.settings.local')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
