@@ -13,6 +13,7 @@ class ImageOutputSerializer(serializers.Serializer):
     name = serializers.CharField()
     url = serializers.URLField()
     slug = serializers.SlugField()
+    created_at = serializers.DateTimeField(format="%Y-%m-%dT%H:%M")
     owner_username = serializers.CharField(source='owner.username',
                                            read_only=True)
 
