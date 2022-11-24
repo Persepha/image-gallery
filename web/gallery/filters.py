@@ -14,11 +14,11 @@ class BaseImageFilter(django_filters.FilterSet):
         query = Q()
         for position in value.split(','):
             query |= Q(**{f'{name}__icontains': position})
-        return queryset.filter(query)
+        return queryset.filter(query).distinct()
 
     def custom_in_name_or_tags(self, queryset, name, value):
         query = Q(name__icontains=value) | Q(tags__title__icontains=value)
-        return queryset.filter(query)
+        return queryset.filter(query).distinct()
 
     class Meta:
         model = Image
