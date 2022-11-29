@@ -54,6 +54,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 REST_AUTH_SERIALIZERS = {
     'TOKEN_SERIALIZER': 'users.serializers.CustomTokenSerializer',
+    'USER_DETAILS_SERIALIZER': 'users.serializers.CustomUserDetailSerializer',
 }
 
 # https://github.com/ottoyiu/django-cors-headers
