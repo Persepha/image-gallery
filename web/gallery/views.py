@@ -34,6 +34,7 @@ class ImageListApi(APIView):
 
 class ImageCreateApi(APIView):
     permission_classes = (IsAuthenticated,)
+    throttle_scope = 'create_image'
 
     def post(self, request):
         serializer = ImageInputSerializer(data=request.data)
@@ -74,6 +75,7 @@ class ImageDeleteApi(APIView):
 
 class ImageUpdateApi(APIView):
     permission_classes = (IsOwner | IsAdminUser, )
+    throttle_scope = 'update_image'
 
     def post(self, request, slug):
         serializer = ImageUpdateInputSerializer(data=request.data)

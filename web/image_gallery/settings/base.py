@@ -48,6 +48,17 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ],
     'EXCEPTION_HANDLER': 'common.exception_handlers.drf_exception_handler',
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.ScopedRateThrottle',
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'create_image': '3/min',
+        'update_image': '3/min',
+        'anon': '60/min',
+        'user': '120/min',
+    }
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
