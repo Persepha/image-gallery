@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework import status
@@ -13,7 +15,8 @@ class ImageDetailApiTests(APITestCase):
             name='test',
             url='https://source.unsplash.com/random/300',
             slug='test',
-            owner=self.user
+            owner=self.user,
+            created_at=datetime.date(2022, 11, 11),
         )
 
     def test_get_image_detail(self):
@@ -26,6 +29,7 @@ class ImageDetailApiTests(APITestCase):
             'url': self.image1.url,
             'slug': self.image1.slug,
             'owner_username': self.image1.owner.username,
+            'created_at': self.image1.created_at.strftime("%Y-%m-%dT%H:%M"),
             'tags': [],
         }
 
