@@ -58,6 +58,7 @@ REST_FRAMEWORK = {
         'update_image': '3/min',
         'anon': '60/min',
         'user': '120/min',
+        'dj_rest_auth': '10/min',
     }
 }
 
